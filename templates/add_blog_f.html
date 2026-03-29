@@ -1,0 +1,190 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static "css/userbf.css" %}">
+
+<div class="main-wrapper">
+  <div class="form-center-wrapper">
+    <form method="POST" enctype="multipart/form-data" class="form-card">
+      {% csrf_token %}
+
+      <!-- Blog Title -->
+      <div class="form-group">
+        <label class="form-label">Blog Title</label>
+        {{ form.title }}
+
+        <button type="button" class="ai-btn" id="btn-title" onclick="suggestTitle()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2a10 10 0 1 0 10 10"/><path d="M18 2v6h6"/>
+          </svg>
+          Suggest with AI
+        </button>
+        <div class="ai-suggestion-box" id="sug-title"></div>
+        <div class="ai-error" id="err-title"></div>
+        
+        <small class="form-error">{{ form.title.errors }}</small>
+      </div>
+
+      <!-- Category -->
+      <div class="form-group">
+        <label class="form-label">Category</label>
+        {{ form.category }}
+        <small class="form-error">{{ form.category.errors }}</small>
+      </div>
+
+      <!-- Featured Image -->
+      <div class="form-group">
+        <label class="form-label">Featured Image</label>
+        {{ form.featured_image }}
+        <small class="form-error">{{ form.featured_image.errors }}</small>
+      </div>
+
+      <!-- Short Description -->
+      <div class="form-group">
+        <label class="form-label">Short Description</label>
+        {{ form.short_description }}
+
+        <button type="button" class="ai-btn" id="btn-desc" onclick="suggestDescription()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2a10 10 0 1 0 10 10"/><path d="M18 2v6h6"/>
+          </svg>
+          Suggest with AI
+        </button>
+        <div class="ai-suggestion-box" id="sug-desc"></div>
+        <div class="ai-error" id="err-desc"></div>
+
+        <small class="form-error">{{ form.short_description.errors }}</small>
+      </div>
+
+      <!-- Blog Content -->
+      <div class="form-group">
+        <label class="form-label">Blog Content</label>
+        {{ form.blog_body }}
+
+        <button type="button" class="ai-btn" id="btn-body" onclick="suggestBody()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2a10 10 0 1 0 10 10"/><path d="M18 2v6h6"/>
+          </svg>
+          Generate Blog Draft
+        </button>
+        <div class="ai-suggestion-box" id="sug-body"></div>
+        <div class="ai-error" id="err-body"></div>
+
+        <small class="form-error">{{ form.blog_body.errors }}</small>
+      </div>
+
+      <button type="submit" class="btn-submit">Add New Blog</button>
+    </form>
+  </div>
+</div>
+
+<script>
+  /* ── helpers ── */
+  function getVal(name) {
+    return (document.getElementById('id_' + name) ||
+            document.querySelector('[name="' + name + '"]') || {}).value || '';
+  }
+  function setVal(name, val) {
+    const el = document.getElementById('id_' + name) ||
+               document.querySelector('[name="' + name + '"]');
+    if (el) el.value = val;
+  }
+  function setLoading(id, on) {
+    const btn = document.getElementById(id);
+    btn.disabled = on;
+    btn.classList.toggle('loading', on);
+  }
+  function clearUI(sugId, errId) {
+    document.getElementById(errId).textContent = '';
+    const box = document.getElementById(sugId);
+    box.innerHTML = '';
+    box.classList.remove('visible');
+  }
+  function showSuggestion(sugId, errId, fieldName, text) {
+    clearUI(sugId, errId);
+    const box = document.getElementById(sugId);
+    const content = document.createElement('div');
+    content.textContent = text;
+    box.appendChild(content);
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'ai-use-btn';
+    btn.textContent = 'Use this';
+    btn.onclick = () => { setVal(fieldName, text); box.classList.remove('visible'); };
+    box.appendChild(btn);
+    box.classList.add('visible');
+  }
+  function showError(errId, msg) {
+    document.getElementById(errId).textContent = '⚠ ' + msg;
+  }
+
+  /* ── call our Django backend (which calls Groq) ── */
+  async function callAI(prompt) {
+    const res = await fetch('/ai-suggest/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-CSRFToken': '{{ csrf_token }}' },
+      body: JSON.stringify({ prompt: prompt })
+    });
+    if (!res.ok) throw new Error('Server error ' + res.status);
+    const data = await res.json();
+    if (data.error) throw new Error(data.error);
+    return data.result.trim();
+  }
+
+  /* ── Suggest Title ── */
+  async function suggestTitle() {
+    const hint = getVal('blog_body').slice(0, 800) || getVal('short_description');
+    if (!hint) { showError('err-title', 'Write some content or description first.'); return; }
+    setLoading('btn-title', true);
+    clearUI('sug-title', 'err-title');
+    try {
+      const text = await callAI(
+        'You are a blog title expert. Based on the content below, suggest ONE compelling ' +
+        'SEO-friendly blog title. Return ONLY the title, no quotes, no extra text.\n\nContent:\n' + hint
+      );
+      showSuggestion('sug-title', 'err-title', 'title', text);
+    } catch (e) { showError('err-title', e.message); }
+    finally { setLoading('btn-title', false); }
+  }
+
+  /* ── Suggest Short Description ── */
+  async function suggestDescription() {
+    const title = getVal('title');
+    const body  = getVal('blog_body').slice(0, 600);
+    if (!title && !body) { showError('err-desc', 'Enter a title or some blog content first.'); return; }
+    setLoading('btn-desc', true);
+    clearUI('sug-desc', 'err-desc');
+    try {
+      const text = await callAI(
+        'Write a short engaging blog meta description in max 160 characters. ' +
+        'Return ONLY the description, no extra text.\n\nBlog title: ' + title + '\nContent: ' + body
+      );
+      showSuggestion('sug-desc', 'err-desc', 'short_description', text);
+    } catch (e) { showError('err-desc', e.message); }
+    finally { setLoading('btn-desc', false); }
+  }
+
+  /* ── Generate Blog Body ── */
+  async function suggestBody() {
+    const title = getVal('title');
+    const desc  = getVal('short_description');
+    if (!title && !desc) { showError('err-body', 'Enter a title or short description first.'); return; }
+    setLoading('btn-body', true);
+    clearUI('sug-body', 'err-body');
+    try {
+      const text = await callAI(
+        'You are an expert blog writer. Write a well-structured engaging blog post ' +
+        'with clear headings and paragraphs. Return ONLY the blog content, no preamble.\n\n' +
+        'Title: ' + title + '\nDescription: ' + desc
+      );
+      showSuggestion('sug-body', 'err-body', 'blog_body', text);
+    } catch (e) { showError('err-body', e.message); }
+    finally { setLoading('btn-body', false); }
+  }
+</script>
+
+<script src="{% static 'js/disable_shortcuts.js' %}"></script>
+
+{% endblock %}

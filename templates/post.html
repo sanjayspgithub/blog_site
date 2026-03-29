@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load static %}
+
+    {% block content %}
+
+    <!-- CATEGORY BY BLOGS -->
+
+    <h2>Reasult for "{{ category_name }}" Category</h2><br>
+    <div class="featured-grid">
+      {% if posts %}
+      {% for b in posts %}
+      <div class="card">
+        <div class="card-image-wrapper">
+          <img src="{{ b.featured_image.url }}" alt="{{ b.title }}" class="card-image">
+        </div>
+        <div class="card-body">
+          <div class="card-category">{{ b.category }}</div>
+          <h2 class="card-title"><a href="{% url "sblogs" b.slug %}">{{ b.title }}</a></h2>
+          <p class="card-excerpt">{{ b.short_description | truncatewords:20 }}</p>
+          <div class="card-meta">
+            <div class="card-authors">
+              <span class="author-name">{{ b.author }}</span>
+            </div>
+            <span>{{ b.created_at | date:"F j, Y" }}</span>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+      {% else %}
+      <section class="hero">
+      <h1>No Blog Found!</h1>
+      </section>
+      {% endif %}
+
+    </div>
+
+    <script src="{% static 'js/disable_shortcuts.js' %}"></script>
+
+    {% endblock %}

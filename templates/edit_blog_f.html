@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static "css/userbf.css" %}">
+
+     <div class="main-wrapper">
+ 
+        <div class="form-center-wrapper">
+ 
+            <form method="POST" enctype="multipart/form-data" class="form-card">
+                {% csrf_token %}
+ 
+                <div class="form-group">
+                    <label class="form-label">Blog ggggggggTitle</label>
+                    {{ form.title }}
+                    <small class="form-error">{{ form.title.errors }}</small>
+                </div>
+ 
+                <div class="form-group">
+                    <label class="form-label">Category</label>
+                    {{ form.category }}
+                    <small class="form-error">{{ form.category.errors }}</small>
+                </div>
+ 
+                <div class="form-group">
+                    <label class="form-label">Featured Image</label>
+                    {{ form.featured_image }}
+                    <small class="form-error">{{ form.featured_image.errors }}</small>
+                </div>
+ 
+                <div class="form-group">
+                    <label class="form-label">Short Description</label>
+                    {{ form.short_description }}
+                    <small class="form-error">{{ form.short_description.errors }}</small>
+                </div>
+ 
+                <div class="form-group">
+                    <label class="form-label">Blog Content</label>
+                    {{ form.blog_body }}
+                    <small class="form-error">{{ form.blog_body.errors }}</small>
+                </div>
+ 
+                <button type="submit" class="btn-submit">
+                    Edit Blog
+                </button>
+ 
+            </form>
+ 
+        </div>
+ 
+    </div>
+
+    <script src="{% static 'js/disable_shortcuts.js' %}"></script>
+{% endblock  %}

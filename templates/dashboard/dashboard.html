@@ -1,0 +1,55 @@
+{% extends "dashboard/base.html" %}
+
+{% block content %}
+
+    <div class="main-wrapper">
+        
+        <header class="admin-header">
+            <div class="flex items-center gap-4">
+                <button class="lg:hidden text-slate-500 text-xl" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></button>
+                <h2 class="text-xl font-bold text-[#0B1C33]">Manage Categories</h2>
+            </div>
+            <div class="flex items-center gap-3">
+                <div class=" flex items-center justify-center font-bold text-slate-600">{{ user }}</div>
+            </div>
+        </header>
+
+        <div class="p-6 lg:p-10">
+            
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-6 mb-8">
+                <a href={% url "categorie" %} class="bg-white border border-slate-200 rounded-xl p-5 flex items-center gap-4 shadow-sm">
+                    <div class="w-10 h-10 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center text-lg"><i class="fa-regular fa-file-lines"></i></div>
+                    <div><p class="text-xs text-slate-500 font-bold uppercase">Total Categories</p><h3 class="text-xl font-bold text-[#0B1C33]">{{ category_count }}</h3></div>
+                </a>
+
+                <a href={% url "blog" %} class="bg-white border border-slate-200 rounded-xl p-5 flex items-center gap-4 shadow-sm">
+                    <div class="w-10 h-10 bg-yellow-50 text-yellow-600 rounded-lg flex items-center justify-center text-lg"><i class="fa-regular fa-file-lines"></i></div>
+                    <div><p class="text-xs text-slate-500 font-bold uppercase">Total Posts</p><h3 class="text-xl font-bold text-[#0B1C33]">{{ blog_count }}</h3></div>
+                </a>
+
+                <a href={% url "user" %} class="bg-white border border-slate-200 rounded-xl p-5 flex items-center gap-4 shadow-sm">
+                    <div class="w-10 h-10 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center text-lg"><i class="fa-solid fa-users"></i></div>
+                    <div><p class="text-xs text-slate-500 font-bold uppercase">Total users</p><h3 class="text-xl font-bold text-[#0B1C33]">{{ total_users_count }}</h3></div>
+                </a>
+
+                <div class="bg-white border border-slate-200 rounded-xl p-5 flex items-center gap-4 shadow-sm">
+                    <div class="w-10 h-10 bg-green-50 text-green-600 rounded-lg flex items-center justify-center text-lg"><i class="fa-solid fa-check"></i></div>
+                    <div><p class="text-xs text-slate-500 font-bold uppercase">Published</p><h3 class="text-xl font-bold text-[#0B1C33]">{{ published_posts_count }}</h3></div>
+                </div>
+
+                <div class="bg-white border border-slate-200 rounded-xl p-5 flex items-center gap-4 shadow-sm">
+                    <div class="w-10 h-10 bg-yellow-50 text-red-600 rounded-lg flex items-center justify-center text-lg"><i class="fa-solid fa-pen-ruler"></i></div>
+                    <div><p class="text-xs text-slate-500 font-bold uppercase">Drafts</p><h3 class="text-xl font-bold text-[#0B1C33]">{{ draft_posts_count }}</h3></div>
+                </div>
+
+                <div class="bg-white border border-slate-200 rounded-xl p-5 flex items-center gap-4 shadow-sm">
+                    <div class="w-10 h-10 bg-yellow-50 text-red-600 rounded-lg flex items-center justify-center text-lg"><i class="fa-solid fa-pen-ruler"></i></div>
+                    <div><p class="text-xs text-slate-500 font-bold uppercase">Pending</p><h3 class="text-xl font-bold text-[#0B1C33]">{{ pending_posts_count }}</h3></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+{% endblock  %}

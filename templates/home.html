@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% load static %}
+
+    {% block content %}
+
+    <!-- FEATURED CARDS -->
+    <div class="featured-grid">
+      {% for b in featured_blogs %}
+      <div class="card">
+        <div class="card-image-wrapper">
+          <img src="{{ b.featured_image.url }}" alt="{{ b.title }}" class="card-image">
+        </div>
+
+        <div class="card-body">
+          <div class="card-category">{{ b.category }}</div>
+          <h2 class="card-title"><a href="{% url "sblogs" b.slug %}">{{ b.title }}</a></h2>
+          <p class="card-excerpt">{{ b.short_description | truncatewords:20 }}</p>
+          <div class="card-meta">
+            <div class="card-authors">
+              <span class="author-name">{{ b.author }}</span>
+            </div>
+            <span>{{ b.created_at | date:"F j, Y" }}</span>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    
+
+    <div class="bq">
+      
+      <blockquote>
+        <h3>About Us</h3>
+        {{ about.about_dec }}
+      </blockquote>
+    </div>
+
+
+    <!-- LATEST -->
+    <section>
+      <h2 class="section-title">Latest</h2>
+      <div class="latest-grid">
+        {% for b in blogs %}
+        <div class="list-item">
+          <div class="list-category">{{ b.category }}</div>
+          <h3 class="list-title"><a href="{% url "sblogs" b.slug %}">{{ b.title }}</a></h3>
+          <p class="list-excerpt">{{ b.short_description | truncatewords:20 }}</p>
+          <div class="list-meta">
+            <div class="list-authors">
+              <span class="author-name">{{ b.author }}</span>
+            </div>
+            <span>{{ b.created_at | date:"F j, Y" }}</span>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </section>
+
+    <script src="{% static 'js/disable_shortcuts.js' %}"></script>
+
+    {% endblock %}

@@ -1,0 +1,51 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blogs Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="{% static "css/dashboard.css" %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-slate-50">
+
+    <aside class="admin-sidebar" id="sidebar">
+        <div class="brand-box">
+            <span class="text-white">Blogs</span><span class="text-[#DC2626]">Dekho</span>
+        </div>
+        <div class="nav-scroll">
+            <a href="{% url "dashboard" %}" class="nav-item"><i class="fa-solid fa-gauge w-5 text-center"></i> Dashboard</a>
+            
+            <p class="nav-group-label">Lead Management</p>
+            <a href="#" class="nav-item"><i class="fa-solid fa-users w-5 text-center"></i> Leads</a>
+            <a href="#" class="nav-item"><i class="fa-solid fa-bell w-5 text-center"></i> Notifications</a>
+
+            <p class="nav-group-label">Content</p>
+            <a href="{% url "blog" %}" class="nav-item "><i class="fa-solid fa-pen-nib w-5 text-center"></i> Blogs</a>
+            <a href="{% url "user_blog" %}" class="nav-item "><i class="fa-solid fa-pen-nib w-5 text-center"></i> Users Blogs</a>
+            <a href="{% url "categorie" %}" class="nav-item "><i class="fa-solid fa-users w-5 text-center"></i> Categoeies</a>
+            <a href="{% url "user" %}" class="nav-item "><i class="fa-solid fa-users w-5 text-center"></i> Users</a>
+            
+            <p class="nav-group-label">Settings</p>
+            <form method="POST" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit" class="nav-item text-red-400 hover:bg-red-900/20 mt-2">
+                    <i class="fa-solid fa-right-from-bracket w-5 text-center"></i> Logout
+                </button>
+            </form>
+        </div>
+    </aside>
+
+    {% block content %}
+    {% endblock  %}
+
+    <script>
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+    </script>
+</body>
+</html>

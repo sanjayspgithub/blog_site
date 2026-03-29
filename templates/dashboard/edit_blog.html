@@ -1,0 +1,70 @@
+{% extends "dashboard/base.html" %}
+
+{% block content %}
+
+    <div class="main-wrapper">
+        
+        <header class="admin-header">
+            <div class="flex items-center gap-4">
+                <button class="lg:hidden text-slate-500 text-xl" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></button>
+                <h2 class="text-xl font-bold text-[#0B1C33]">Edit Blog</h2>
+            </div>
+            <div class="flex items-center gap-3">
+                <div class=" flex items-center justify-center font-bold text-slate-600">{{ user }}</div>
+            </div>
+        </header>
+
+        <div class="flex justify-center items-center min-h-[70vh]">
+    
+            <form method="POST" enctype="multipart/form-data" class="bg-white p-6 rounded-lg shadow w-full max-w-md mt-7">
+                {% csrf_token %}
+
+                <div class="mb-4">
+                    <label class="block text-sm font-bold mb-1">Blog Title</label>
+                    {{ form.title }}
+                    <small class="text-red-500">{{ form.title.errors }}</small>
+                </div>
+
+                <div class="mb-4">
+                    <label class="block text-sm font-bold mb-1">Category</label>
+                    {{ form.category }}
+                    <small class="text-red-500">{{ form.category.errors }}</small>
+                </div>
+
+                <div class="mb-4">
+                    <label class="block text-sm font-bold mb-1">Featured Image</label>
+                    {{ form.featured_image }}
+                    <small class="text-red-500">{{ form.featured_image.errors }}</small>
+                </div>
+
+                <div class="mb-4">
+                    <label class="block text-sm font-bold mb-1">Short Description</label>
+                    {{ form.short_description }}
+                    <small class="text-red-500">{{ form.short_description.errors }}</small>
+                </div>
+
+                <div class="mb-4">
+                    <label class="block text-sm font-bold mb-1">Blog Content</label>
+                    {{ form.blog_body }}
+                    <small class="text-red-500">{{ form.blog_body.errors }}</small>
+                </div>
+
+                <div class="mb-4">
+                    <label class="block text-sm font-bold mb-1">Status</label>
+                    {{ form.status }}
+                    <small class="text-red-500">{{ form.status.errors }}</small>
+                </div>
+
+                <button type="submit"
+                    class="w-full px-5 py-2.5 bg-[#DC2626] text-white rounded-lg font-bold hover:bg-[#b91c1c]">
+                    Edit Blog
+                </button>
+
+            </form>
+
+        </div>
+
+        
+    </div>
+
+{% endblock  %}

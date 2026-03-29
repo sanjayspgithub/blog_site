@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<link href="{% static 'css/blog.css' %}" rel="stylesheet">
+
+<div class="bodyy">
+  <!-- Article -->
+  <article class="article">
+    <p class="category">{{ single_blog.category }}</p>
+
+    <h1>{{ single_blog.title }}</h1>
+
+    <div class="author-row">
+      <div class="author-meta">
+        <span class="author-names">{{ single_blog.author }}</span>
+        <span class="post-date">{{ single_blog.created_at }}</span>
+      </div>
+    </div>
+
+    <img class="hero-img"
+        src="{{ single_blog.featured_image.url }}"
+        onerror="this.style.backgroundImage='linear-gradient(135deg,#1a2a14,#0e1a0e 60%,#111)'"/>
+
+    <div class="content">
+      <p>{{ single_blog.short_description }}</p>
+    </div>
+
+    <div class="content">
+      <p>{{ single_blog.blog_body }}</p>
+    </div>
+
+  </article>
+
+  <!-- Comments -->
+  <section class="comments-section">
+
+    <h2 class="section-title">Comments ({{ comment_count }})</h2>
+
+    {% if comments %}
+    {% for c in comments %}
+    <div class="comment">
+      <div class="comment-body">
+        <div class="comment-header">
+          <span class="comment-name">{{ c.user }} </span>
+          <span class="comment-time">{{ c.created_at }}</span>
+        </div>
+        <p class="comment-text">{{ c }}</p>
+      </div>
+    </div>
+    {% endfor %}
+    {% else %}
+    No Comment yet.
+    {% endif %}
+
+    <hr class="comments-divider"/>
+
+    <!-- Write a comment -->
+    <div class="write-comment">
+      <h3>Leave a comment</h3>
+      {% if user.is_authenticated %}
+      <form method="POST">
+        {% csrf_token %}
+        <textarea name="comment" placeholder="Share your thoughts…"></textarea>
+        <button type="submit" class="submit-btn">Post Comment</button>
+      </form>
+      {% else %}
+      <h3>Please <a href="{% url "login" %}">Sign-in</a> to write a comment</h3>
+      {% endif %}
+    </div>
+
+  </section>
+</div>
+
+<script src="{% static 'js/disable_shortcuts.js' %}"></script>
+
+{% endblock %}

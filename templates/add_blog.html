@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static "css/userb.css" %}">
+
+    <div class="main-wrapper">
+        <div class="p-6">
+ 
+            <div class="top-bar">
+                <form method="GET" class="flex gap-3 mb-4">
+                    <div class="flex flex-wrap items-center gap-3 w-full md:w-auto">
+                        <select name="status" onchange="this.form.submit()">
+                            <option value="" {% if not selected_status %}selected{% endif %}>All Status</option>
+                            <option value="published" {% if selected_status == 'published' %}selected{% endif %}>Published</option>
+                            <option value="pending" {% if selected_status == 'pending' %}selected{% endif %}>Pending</option>
+                        </select>
+                    </div>
+                </form>
+ 
+                <a href="{% url "add_blog_f" %}" class="btn-write">
+                    <i class="fa-solid fa-pen-to-square"></i> Write New Blog
+                </a>
+            </div>
+ 
+            <div class="table-card">
+                <div class="overflow-x-auto">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Blog Title</th>
+                                <th>Category</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+ 
+                        <tbody>
+                            {% for b in blogs %}
+                            <tr>
+                                <td>
+                                    <div>
+                                        <span class="blog-title">{{ b.title }}</span>
+                                    </div>
+                                </td>
+                                <td><span class="badge-category">{{ b.category }}</span></td>
+ 
+                                {% if b.status == 'published' %}
+                                <td><span class="badge-published">{{ b.status }}</span></td>
+                                {% elif b.status == 'pending' %}
+                                <td><span class="badge-pending">{{ b.status }}</span></td>
+                                {% else %}
+                                <td></td>
+                                {% endif %}
+ 
+                                <td class="actions-cell">
+                                    <div class="action-group">
+                                        <a href="{% url "edit_blog_f" b.id %}" class="action-btn edit"><i class="fa fa-edit"></i></a>
+                                        <a href="{% url "user_delete_blog" b.id %}" onclick="return confirm('Are you sure you want to delete this BLOG?')" class="action-btn delete"><i class="fa-regular fa-trash-can"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+ 
+        </div>
+    </div>
+
+
+    <script src="{% static 'js/disable_shortcuts.js' %}"></script>
+
+{% endblock  %}

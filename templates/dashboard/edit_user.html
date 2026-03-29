@@ -1,0 +1,97 @@
+{% extends "dashboard/base.html" %}
+
+{% block content %}
+
+    <div class="main-wrapper">
+        
+        <header class="admin-header">
+            <div class="flex items-center gap-4">
+                <button class="lg:hidden text-slate-500 text-xl" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></button>
+                <h2 class="text-xl font-bold text-[#0B1C33]">Edit User</h2>
+            </div>
+            <div class="flex items-center gap-3">
+                <div class=" flex items-center justify-center font-bold text-slate-600">{{ user }}</div>
+            </div>
+        </header>
+
+        <div class="flex justify-center items-center min-h-[70vh]">
+    
+            <form method="POST" class="bg-white p-6 rounded-lg shadow w-full max-w-md">
+                {% csrf_token %}
+
+                <div class="mb-4">
+                    <label class="block text-sm rounded-lg font-bold mb-1">User Name</label>
+                    {{ form.username }}
+                    <small class="text-red-500">{{ form.username.errors }}</small>
+                </div>
+
+                <div class="mb-4">
+                    <label class="block text-sm rounded-lg font-bold mb-1">User FirstName</label>
+                    {{ form.first_name }}
+                    <small class="text-red-500">{{ form.first_name.errors }}</small>
+                </div>
+
+                <div class="mb-4">
+                    <label class="block text-sm rounded-lg font-bold mb-1">User LastName</label>
+                    {{ form.last_name }}
+                    <small class="text-red-500">{{ form.last_name.errors }}</small>
+                </div>
+
+                <div class="mb-4">
+                    <label class="block text-sm rounded-lg font-bold mb-1">User Email</label>
+                    {{ form.email }}
+                    <small class="text-red-500">{{ form.email.errors }}</small>
+                </div>
+
+                <div class="mb-4">
+                    <label class="block text-sm rounded-lg font-bold mb-1">User Active</label>
+                    {{ form.is_active }}
+                    <small class="text-red-500">{{ form.is_active.errors }}</small>
+                </div>
+
+                <div class="mb-4">
+                    <label class="block text-sm rounded-lg font-bold mb-1">User Staff</label>
+                    {{ form.is_staff }}
+                    <small class="text-red-500">{{ form.is_staff.errors }}</small>
+                </div>
+
+                <div class="mb-4">
+                    <label class="block text-sm rounded-lg font-bold mb-1">Permissions</label>
+                    {{ form.user_permissions }}
+                    <small class="text-red-500">{{ form.user_permission.errors }}</small>
+                </div>
+
+                <div class="mb-4 relative">
+                    <label class="block text-sm rounded-lg font-bold mb-1">User Password</label>
+                    {{ form.password }}
+                    <span onclick="togglePassword()" id="eyeIcon" class="absolute right-3 top-9 cursor-pointer text-gray-500">🙈</span>
+                    <small class="text-red-500">{{ form.password.errors }}</small>
+                </div>
+
+                <button type="submit"
+                    class="w-full px-5 py-2.5 bg-[#DC2626] text-white rounded-lg font-bold hover:bg-[#b91c1c]">
+                    Edit User
+                </button>
+            </form>
+
+        </div> 
+
+        
+    </div>
+
+
+    <script>
+    function togglePassword() {
+        const passwordField = document.getElementById("passwordField");
+        const eyeIcon = document.getElementById("eyeIcon");
+
+        if (passwordField.type === "password") {
+            passwordField.type = "text";
+            eyeIcon.textContent = "🐵"; 
+        } else {
+            passwordField.type = "password";
+            eyeIcon.textContent = "🙈"; 
+        }
+    }
+    </script>
+{% endblock  %}

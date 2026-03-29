@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load static %}
+
+    {% block content %}
+
+    <!-- KEYWORD SEARCH BLOGS -->
+
+    <section>
+      <h2>Search Result for "{{ keyword }}"</h2>
+      <div class="latest-grid">
+        {% if blog %}
+        {% for b in blog %}
+        <div class="list-item">
+          <div class="list-category">{{ b.category }}</div>
+          <h3 class="list-title"><a href="{% url "sblogs" b.slug %}">{{ b.title }}</a></h3>
+          <p class="list-excerpt">{{ b.short_description | truncatewords:20 }}</p>
+          <div class="list-meta">
+            <div class="list-authors">
+              <span class="author-name">{{ b.author }}</span>
+            </div>
+            <span>{{ b.created_at | date:"F j, Y" }}</span>
+          </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <h2>No Search Result</h2>
+        {% endif %}
+      </div>
+    </section>
+
+    <script src="{% static 'js/disable_shortcuts.js' %}"></script>
+
+    {% endblock %}

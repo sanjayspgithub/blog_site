@@ -1,0 +1,37 @@
+@import "https://fonts.googleapis.com/css?family=Inconsolata";
+
+html {
+    min-height: 100%;
+}
+
+body {
+    box-sizing: border-box;
+    height: 100%;
+    background-color: #000000;
+    background-size: cover;
+    font-family: "Inconsolata", Helvetica, sans-serif;
+    font-size: 1.5rem;
+    color: #dc7124;
+}
+
+.terminal {
+    box-sizing: inherit;
+    position: absolute;
+    height: 100%;
+    width: 1000px;
+    max-width: 100%;
+    padding: 4rem;
+    text-transform: uppercase;
+}
+
+.output {
+    color: rgb(255, 255, 255);
+}
+
+.output::before {
+    content: "> ";
+}
+
+.errorcode {
+    color: white;
+}

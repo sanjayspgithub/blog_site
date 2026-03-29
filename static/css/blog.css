@@ -1,0 +1,183 @@
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0a0a;
+      --surface: #111111;
+      --card: #161616;
+      --border: rgba(255,255,255,0.08);
+      --text: #e8e8e6;
+      --muted: #7a7a78;
+      --tag-bg: rgba(255,255,255,0.06);
+      --accent: #84cc16;
+      --accent-dim: rgba(132,204,22,0.15);
+      --avatar-ring: rgba(255,255,255,0.12);
+    }
+
+    .bodyy {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.7;
+    }
+
+    /* ── Article wrapper ── */
+    .article {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 56px 24px 50px;
+      animation: fadeUp 0.5s cubic-bezier(.22,1,.36,1) both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Category tag ── */
+    .category {
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 16px;
+    }
+
+    /* ── Title ── */
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 2.8rem);
+      font-weight: 700;
+      line-height: 1.2;
+      color: var(--text);
+      letter-spacing: -0.02em;
+      margin-bottom: 24px;
+    }
+
+    /* ── Author row ── */
+    .author-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 40px;
+    }
+    .author-meta { display: flex; flex-direction: column; gap: 2px; }
+    .author-names { font-size: 0.88rem; font-weight: 500; color: var(--text); }
+    .post-date   { font-size: 0.8rem; color: var(--muted); }
+
+    /* ── Hero image ── */
+    .hero-img {
+      width: 100%;
+      height: 420px;
+      object-fit: cover;
+      border-radius: 14px;
+      margin-bottom: 44px;
+      display: block;
+      background: var(--card);
+      /* Fallback gradient when no real image */
+      background-image: linear-gradient(135deg, #1a2a14 0%, #0e1a0e 50%, #111 100%);
+    }
+
+    /* ── Body content ── */
+    .content p {
+      font-size: 1.05rem;
+      color: #c8c8c4;
+      font-weight: 300;
+      padding-bottom: 30px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* ── Comments section ── */
+    .comments-section {
+      max-width: 780px;
+      margin: 0 auto 80px;
+      padding: 0 24px;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      color: var(--text);
+      margin-bottom: 28px;
+    }
+
+    /* Existing comments */
+    .comment {
+      display: flex;
+      gap: 14px;
+      margin-bottom: 28px;
+      animation: fadeUp 0.4s cubic-bezier(.22,1,.36,1) both;
+      
+    }
+    .comment-body { flex: 1; }
+    .comment-header {
+      display: flex; align-items: baseline; gap: 10px;
+      margin-bottom: 6px;
+    }
+    .comment-name { font-size: 0.88rem; font-weight: 500; color: var(--text); }
+    .comment-time { font-size: 0.75rem; color: var(--muted); }
+    .comment-text { font-size: 0.9rem; color: #aeaead; line-height: 1.65; }
+    
+    .comments-divider {
+      border: none; border-top: 1px solid var(--border);
+      margin: 36px 0;
+    }
+
+    /* Write a comment */
+    .write-comment h3 {
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 16px;
+    }
+    .write-comment a {
+      color: var(--text);
+    }
+    .write-comment a:hover {
+      color: #dc7124;
+    }
+
+    .write-comment textarea {
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid #dc7124;
+      border-radius: 10px;
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      padding: 13px 15px;
+      outline: none;
+      resize: vertical;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      margin-bottom: 12px;
+    }
+    .write-comment textarea:focus {
+      border-color: #dc7124;
+      box-shadow: 0 0 0 3px rgba(132,204,22,0.1);
+    }
+    .write-comment textarea { min-height: 110px; }
+
+    .submit-btn {
+      margin-top: 4px;
+      padding: 12px 28px;
+      background: white;
+      color: #0a0a0a;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 9px;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.15s;
+      letter-spacing: 0.01em;
+    }
+    .submit-btn:hover { background: #dc7124; }
+    
+    @media (max-width: 520px) {
+      .form-row { flex-direction: column; }
+      h1 { font-size: 1.8rem; }
+    }

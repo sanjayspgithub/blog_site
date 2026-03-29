@@ -1,0 +1,175 @@
+
+/* --- Center Wrapper --- */
+.form-center-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 2.5rem 1.5rem;
+    min-height: 100vh;
+}
+
+/* --- Form Card --- */
+.form-card {
+    background-color: #ffffff;
+    border: 1px solid #E2E8F0;
+    border-radius: 12px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+    padding: 2rem 2.5rem;
+    width: 100%;
+    max-width: 680px;
+}
+
+/* --- Form Group --- */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin-bottom: 1.25rem;
+}
+
+/* --- Form Label --- */
+.form-label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #64748B;
+}
+
+/* --- All Inputs, Selects, Textareas --- */
+.form-card input[type="text"],
+.form-card input[type="file"],
+.form-card select,
+.form-card textarea {
+    width: 100%;
+    padding: 0.625rem 0.875rem;
+    border: 1px solid #E2E8F0;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    font-family: inherit;
+    color: #334155;
+    background-color: #ffffff;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    box-sizing: border-box;
+}
+
+.form-card input[type="text"]:focus,
+.form-card select:focus,
+.form-card textarea:focus {
+    border-color: #0B1C33;
+    box-shadow: 0 0 0 3px rgba(11, 28, 51, 0.08);
+}
+
+/* --- File Input Specific --- */
+.form-card input[type="file"] {
+    padding: 0.4rem 0.875rem;
+    cursor: pointer;
+    color: #64748B;
+}
+
+/* --- Textarea --- */
+.form-card textarea {
+    resize: vertical;
+    min-height: 90px;
+}
+
+/* --- Error Text --- */
+.form-error {
+    font-size: 0.75rem;
+    color: #DC2626;
+    min-height: 1rem;
+}
+
+/* --- Submit Button --- */
+.btn-submit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 0.75rem 1.25rem;
+    background-color: #DC2626;
+    color: #ffffff;
+    font-size: 0.875rem;
+    font-weight: 700;
+    font-family: inherit;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    box-shadow: 0 2px 6px rgba(220, 38, 38, 0.25);
+    margin-top: 0.5rem;
+}
+.btn-submit:hover {
+    background-color: #b91c1c;
+}
+
+/* =========================================
+   RESPONSIVE — FORM
+   ========================================= */
+@media (max-width: 768px) {
+    .form-center-wrapper {
+        padding: 1.25rem 1rem;
+        align-items: flex-start;
+    }
+    .form-card {
+        padding: 1.5rem 1.25rem;
+    }
+}
+
+
+/* ── AI suggestion layer ─────────────────────────────── */
+  .ai-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 6px;
+    padding: 5px 14px;
+    font-size: 12px;
+    font-weight: 500;
+    color: #dc7124;
+    background: #f0ecff;
+    border: 1px solid #d4c8ff;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+    user-select: none;
+  }
+  .ai-btn:hover  { background: #e4dcff; border-color: #b9a8ff; }
+  .ai-btn:disabled { opacity: 0.55; cursor: not-allowed; }
+  .ai-btn svg { width: 13px; height: 13px; flex-shrink: 0; }
+  .ai-btn.loading svg { animation: ai-spin 0.8s linear infinite; }
+  @keyframes ai-spin { to { transform: rotate(360deg); } }
+ 
+  .ai-suggestion-box {
+    display: none;
+    margin-top: 8px;
+    padding: 12px 14px;
+    background: #faf9ff;
+    border: 1px solid #d4c8ff;
+    border-radius: 8px;
+    font-size: 13px;
+    color: #2d2d2d;
+    white-space: pre-wrap;
+    line-height: 1.6;
+  }
+  .ai-suggestion-box.visible { display: block; }
+ 
+  .ai-use-btn {
+    margin-top: 10px;
+    padding: 4px 16px;
+    font-size: 12px;
+    background: #6c47ff;
+    color: #fff;
+    border: none;
+    border-radius: 16px;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .ai-use-btn:hover { background: #5535e0; }
+ 
+  .ai-error {
+    margin-top: 5px;
+    font-size: 12px;
+    color: #c0392b;
+  }

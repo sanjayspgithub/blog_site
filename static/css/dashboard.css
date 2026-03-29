@@ -1,0 +1,186 @@
+/* =========================================
+   1. GLOBAL VARIABLES & RESET
+   ========================================= */
+:root {
+    --nav-width: 260px;
+    --header-height: 70px;
+    --primary: #0B1C33;       /* Brand Navy */
+    --accent: #DC2626;        /* Brand Red */
+    --surface: #F8FAFC;       /* Light Grey BG */
+    --white: #ffffff;
+    --border: #E2E8F0;
+    --text-main: #334155;
+    --text-light: #64748B;
+    --success: #10B981;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+body { 
+    font-family: 'Plus Jakarta Sans', sans-serif; 
+    background-color: var(--surface); 
+    color: var(--text-main);
+    margin: 0; padding: 0;
+    overflow-x: hidden;
+}
+
+/* =========================================
+   2. SIDEBAR NAVIGATION
+   ========================================= */
+.admin-sidebar {
+    width: var(--nav-width); height: 100vh;
+    position: fixed; left: 0; top: 0;
+    background: var(--primary); color: white;
+    z-index: 50; display: flex; flex-direction: column;
+    transition: transform 0.3s ease;
+}
+
+.brand-box {
+    height: var(--header-height); display: flex; align-items: center; padding: 0 1.5rem;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    font-family: 'Outfit', sans-serif; font-size: 1.25rem; font-weight: 700;
+}
+
+.nav-scroll { flex: 1; padding: 1.5rem 1rem; overflow-y: auto; }
+
+.nav-group-label {
+    font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em;
+    color: rgba(255,255,255,0.4); margin: 1.5rem 0 0.5rem 0.5rem; font-weight: 700;
+}
+
+.nav-item {
+    display: flex; align-items: center; gap: 12px; padding: 0.75rem 1rem;
+    color: rgba(255,255,255,0.7); text-decoration: none; border-radius: 8px;
+    margin-bottom: 0.25rem; font-size: 0.9rem; transition: all 0.2s;
+}
+.nav-item:hover, .nav-item.active { background: rgba(255,255,255,0.1); color: white; }
+.nav-item.active { border-left: 3px solid var(--accent); }
+
+/* =========================================
+   3. MAIN LAYOUT & HEADER
+   ========================================= */
+.main-wrapper { 
+    margin-left: var(--nav-width); 
+    min-height: 100vh; 
+    transition: margin-left 0.3s ease;
+}
+
+.admin-header {
+    height: var(--header-height); background: white; border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between; padding: 0 2rem;
+    position: sticky; top: 0; z-index: 40;
+}
+
+/* =========================================
+   4. FORM ELEMENTS (Cards, Inputs, Labels)
+   ========================================= */
+.form-section {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+}
+
+.section-title {
+    font-size: 1rem; font-weight: 700; color: var(--primary);
+    margin-bottom: 1.25rem; padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 10px;
+}
+.section-title i { color: var(--text-light); }
+
+.form-label {
+    display: block; font-size: 0.8rem; font-weight: 700; 
+    margin-bottom: 0.5rem; color: var(--text-main);
+}
+
+.form-control {
+    width: 100%; padding: 0.7rem 1rem; 
+    border: 1px solid var(--border);
+    border-radius: 8px; background: white; 
+    font-size: 0.9rem; outline: none;
+    transition: all 0.2s;
+}
+.form-control:focus { 
+    border-color: var(--primary); 
+    box-shadow: 0 0 0 3px rgba(11, 28, 51, 0.1); 
+}
+
+/* =========================================
+   5. INTERACTIVE COMPONENTS
+   ========================================= */
+
+/* A. Selection Chips (For Colleges/Courses) */
+.chip-group { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+
+.select-chip {
+    display: flex; align-items: center; gap: 8px;
+    padding: 0.6rem 1.2rem;
+    border: 1px solid var(--border); border-radius: 50px;
+    background: white; cursor: pointer;
+    font-size: 0.9rem; font-weight: 500; color: var(--text-light);
+    transition: all 0.2s ease; user-select: none;
+}
+.select-chip:has(input:checked) {
+    background: #EFF6FF; border-color: #2563EB; color: #1D4ED8;
+    box-shadow: 0 2px 4px rgba(37, 99, 235, 0.1);
+}
+.select-chip:hover { border-color: #94A3B8; background: #F8FAFC; }
+.select-chip input { display: none; }
+
+/* B. File Upload Drag & Drop */
+.drop-zone {
+    border: 2px dashed var(--border); border-radius: 8px;
+    padding: 2rem; text-align: center; background: #FAFAFA;
+    cursor: pointer; transition: all 0.2s;
+}
+.drop-zone:hover { border-color: var(--primary); background: #F0F9FF; }
+
+/* C. Tabs Navigation */
+.tabs-container {
+    background: white; border-bottom: 1px solid var(--border);
+    position: sticky; top: var(--header-height); z-index: 30;
+    padding: 0 2rem;
+}
+.tabs-list { display: flex; gap: 2rem; overflow-x: auto; }
+.tab-link {
+    padding: 1rem 0; font-size: 0.9rem; font-weight: 600; color: var(--text-light);
+    border-bottom: 3px solid transparent; cursor: pointer; white-space: nowrap;
+}
+.tab-link.active { color: var(--primary); border-bottom-color: var(--accent); }
+
+/* =========================================
+   6. MODULE SPECIFIC STYLES
+   ========================================= */
+
+/* Leads: Google Sheet Iframe */
+.sheet-frame {
+    width: 100%;
+    height: 75vh;
+    border: none;
+    background: #f1f5f9;
+    display: block;
+}
+
+/* College/Blogs: Sticky Footer Actions */
+.sticky-footer {
+    position: fixed; bottom: 0; right: 0;
+    width: calc(100% - var(--nav-width));
+    background: white; border-top: 1px solid var(--border);
+    padding: 1rem 2rem; z-index: 40;
+    display: flex; justify-content: flex-end; gap: 1rem;
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.05);
+    transition: width 0.3s ease;
+}
+
+/* =========================================
+   7. RESPONSIVE UTILITIES
+   ========================================= */
+@media (max-width: 1024px) {
+    .admin-sidebar { transform: translateX(-100%); }
+    .admin-sidebar.open { transform: translateX(0); }
+    .main-wrapper { margin-left: 0; }
+    .sticky-footer { width: 100%; }
+}
